@@ -9,7 +9,7 @@ def forced_pendulum_ode(t, state, l, g, C, Omega):
     返回: [dtheta/dt, domega/dt]
     """
     # TODO: 在此实现受迫单摆的ODE方程
-    raise NotImplementedError("请实现此函数")theta, omega = state
+    theta, omega = state
     dtheta_dt = omega
     domega_dt = - (g / l) * np.sin(theta) + C * np.cos(theta) * np.sin(Omega * t)
     return [dtheta_dt, domega_dt]
@@ -21,10 +21,16 @@ def solve_pendulum(l=0.1, g=9.81, C=2, Omega=5, t_span=(0,100), y0=[0,0]):
     """
     # TODO: 使用solve_ivp求解受迫单摆方程
     # 提示: 需要调用forced_pendulum_ode函数
-if t_eval is None:
-        t_eval = np.linspace(0, 100, 2000)
-    state0 = [0, 0]
-    sol = solve_ivp(forced_pendulum_ode, t_span, state0, args=(l, g, C, Omega), t_eval=t_eval)
+    t_eval = np.linspace(t_span[0], t_span[1], 2000)
+    sol = solve_ivp(
+        lambda t, y: forced_pendulum_ode(t, y, l, g, C, Omega),
+        t_span,
+        y0,
+        t_eval=t_eval,
+        rtol=1e-6,
+        atol=1e-9
+    )
+    
     return sol.t, sol.y[0]
 
 def find_resonance(l=0.1, g=9.81, C=2, Omega_range=None, t_span=(0,200), y0=[0,0]):
