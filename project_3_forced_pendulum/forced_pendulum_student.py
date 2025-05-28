@@ -40,7 +40,7 @@ def find_resonance(l=0.1, g=9.81, C=2, Omega_range=None, t_span=(0,200), y0=[0,0
     """
     # TODO: 实现共振频率查找功能
     # 提示: 需要调用solve_pendulum函数并分析结果
-if Omega_range is None:
+    if Omega_range is None:
         Omega_0 = np.sqrt(g / l)
         Omega_range = np.linspace(Omega_0 / 2, 2 * Omega_0, 50)
     amplitudes = []
@@ -81,7 +81,7 @@ def main():
     plt.show()
     # 找到共振频率并绘制共振情况
     # TODO: 实现共振频率查找和绘图
-resonant_Omega_index = np.argmax(amplitudes)
+    resonant_Omega_index = np.argmax(amplitudes)
     resonant_Omega = Omega_range[resonant_Omega_index]
     t_resonant, theta_resonant = solve_pendulum(Omega=resonant_Omega, t_span=(0, 100))
     plot_results(t_resonant, theta_resonant, f"共振频率 Ω = {resonant_Omega:.3f} s⁻¹ 时摆角 θ(t) 随时间 t 的变化")
